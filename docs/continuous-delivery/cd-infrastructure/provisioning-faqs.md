@@ -512,3 +512,48 @@ Multi-line secrets may not render correctly. Using Terraform’s `heredoc` synta
 
 ### How can I dynamically select infrastructure in my deployment?
 Users can use runtime expressions to dynamically select infrastructure based on environment conditions. This requires pre-defined mappings of environment-to-infrastructure variables.
+
+### What is dynamic infrastructure provisioning with Terraform in Harness CD?
+Dynamic infrastructure provisioning allows Harness to use Terraform scripts to create the target deployment infrastructure for a CD stage dynamically during execution.
+
+### What are the main steps involved in Terraform-based dynamic provisioning?
+1. Add Terraform scripts to the stage's Environment settings.
+2. Map Terraform outputs to the Harness Infrastructure Definition.
+3. Harness provisions the target infrastructure dynamically.
+4. The pipeline stage deploys services to the provisioned infrastructure.
+
+### Which deployment types support dynamic provisioning in Harness?
+Harness supports dynamic provisioning for various deployment types, including:
+1. Kubernetes (including Helm, Native Helm, and Kustomize)
+2. AWS ECS, ASG, Lambda, and Spot Elastigroup
+3. Azure Web Apps
+4. Google Cloud Functions
+5. Serverless.com framework for AWS Lambda
+6. Tanzu Application Services
+7. VM deployments using SSH or WinRM
+
+### What are the prerequisites for using Terraform in Harness CD pipelines?
+1. Terraform must be installed on the Harness Delegate.
+2. A Secrets Manager should be used to securely store Terraform plans.
+3. Configuration File Repository must be set up to access Terraform scripts.
+
+### How does Harness ensure security when handling Terraform plan files?
+Terraform plans are encrypted before being stored in a Secrets Manager.
+Harness never passes Terraform plan files as plain text.
+Decryption occurs only within the Harness Delegate before execution.
+
+### What is the Provisioner Identifier, and why is it important?
+The Provisioner Identifier is a unique ID that links Terraform Plan and Apply steps. It ensures that the Apply step refers to the correct Terraform configuration from the Plan step.
+
+### Can Terraform modules and workspaces be used in Harness CD pipelines?
+Yes, Harness supports:
+1. Terraform modules by fetching module sources dynamically.
+2. Terraform workspaces for isolating environments like Dev, QA, and Prod.
+
+### What types of variable files does Harness support for Terraform provisioning?
+1. Inline variable files (entered directly in Harness UI).
+2. Remote variable files (stored in Git, Artifactory, AWS S3, etc.).
+
+### How does Terraform rollback work in Harness?
+Harness rolls back to the last successful Terraform state. The rollback does not increment the Terraform state serial number. It restores only the modules included in the last successful state.
+
